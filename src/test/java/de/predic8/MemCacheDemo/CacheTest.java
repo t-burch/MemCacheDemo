@@ -15,4 +15,14 @@ class CacheTest extends MemcachedTest {
         cache.getResource(resourceName);
         assertTrue(cache.isCached(resourceName));
     }
+
+    @Test
+    void cacheExpiryTest() throws InterruptedException, TimeoutException, MemcachedException {
+        String resourceName = cache.submitRandomString();
+        assertFalse(cache.isCached(resourceName));
+        cache.getResource(resourceName, 10);
+        assertTrue(cache.isCached(resourceName));
+        Thread.sleep(10000);
+        assertFalse(cache.isCached(resourceName));
+    }
 }

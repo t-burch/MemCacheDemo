@@ -26,10 +26,14 @@ public class Cache {
     }
 
     public String getResource(String name) throws InterruptedException, TimeoutException, MemcachedException {
+        return getResource(name, 3600);
+    }
+
+    public String getResource(String name, int expiry) throws InterruptedException, TimeoutException, MemcachedException {
         String resource = memcache.get(name);
         if (resource == null) {
             String storeResource = store.fetch(name);
-            memcache.add(name, 3600, storeResource);
+            memcache.add(name, expiry, storeResource);
             return storeResource;
         } else {
             return resource;
