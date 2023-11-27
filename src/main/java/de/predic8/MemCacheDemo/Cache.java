@@ -17,6 +17,7 @@ public class Cache {
         store = new Store();
 
         memcache.addServer("127.0.0.1", 11211);
+        memcache.addServer("127.0.0.1", 11212);
     }
 
     public String submitRandomString() {
@@ -50,5 +51,9 @@ public class Cache {
 
         String base64String = Base64.getEncoder().encodeToString(randomBytes);
         return base64String.substring(0, length);
+    }
+
+    public XMemcachedClient getMemcache() {
+        return memcache;
     }
 }

@@ -6,11 +6,13 @@ import java.io.IOException;
 
 abstract class MemcachedTest {
     private static Process memcachedProcess;
+    private static Process memcachedProcess2;
     public static Cache cache;
 
     @BeforeAll
     public static void startMemcached() throws IOException {
         memcachedProcess = new ProcessBuilder("memcached", "-p", "11211", "-vv").start();
+        memcachedProcess2 = new ProcessBuilder("memcached", "-p", "11212", "-vv").start();
         cache = new Cache();
     }
 
@@ -18,6 +20,9 @@ abstract class MemcachedTest {
     public static void stopMemcached() {
         if (memcachedProcess != null) {
             memcachedProcess.destroy();
+        }
+        if (memcachedProcess2 != null) {
+            memcachedProcess2.destroy();
         }
     }
 }
